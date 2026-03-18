@@ -1,0 +1,94 @@
+<html><head><title>C3 Bridge</title><meta name='viewport' content='width=device-width, initial-scale=1'>
+<script>
+function upLog() {
+  const b = document.getElementById('lb');
+  const s = b.scrollHeight - b.clientHeight <= b.scrollTop + 50;
+  fetch('/getlog')
+    .then(r => r.text())
+    .then(d => {
+      b.innerHTML = d;
+      if (s) b.scrollTop = b.scrollHeight;
+    });
+}
+setInterval(upLog, 1200);
+</script>
+  <style>
+  body {
+    font-family: sans-serif;
+    background: )rawliteral" + pageBackgroundColor + R"rawliteral(; 
+    padding: 15px;
+  }
+  .form {
+	display: flex
+}
+  .card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+  }
+  .secDiv input {
+    width: 48%;
+    display: inline-block;
+  }
+   .secDiv input:first-child {
+    margin-right: 4%;
+  }
+  .box {
+    background: #1e1e1e;
+    color: #0f0;
+    padding: 10px;
+    height: 280px;
+    overflow-y: auto;
+    font-family: monospace;
+    border-radius: 5px;
+    white-space: pre-wrap;
+  }
+  input[type=text], input[type=password] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  .btn {
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+  </style>
+  </head><body>
+<div class='card'>
+  <h3>📶 Netwerk Instellingen</h3>
+  <form action='/savecfg' method='POST'>
+    <label>SSID:<input type='text' name='s' value='ssidNaam'></label>
+    <label>Wachtwoord:<input name='p' type='password' value='12345678'></label>
+    <label>mDNS:<input name='m' id='mdns' value='mDnsWaarde'></label>
+    <label>Baudrate:<input name='b' id='baudrate' value='4800'></label>
+    <p>Parity</p>
+    <label><input type='radio' name='parity'value='E'> Even</label>
+    <label><input type='radio' name='parity'value='O'> Odd</label>
+    <label><input type='radio' name='parity'value='N'> No Parity</label>
+    <label>Data Bits:</label><input name='data' value='8'></label>
+    <label>Stop Bits:</label><input name='stop' value='1'></label>
+	<div class='secDiv'>
+    <input type='submit' class='btn' value=')"rawliteral" + UI_SAVE_BUTTON + R"rawliteral(' style='background:#28a745;'>
+</div>
+  </form>
+</div>
+<div class='card'>
+  <h3>📤 UART Command</h3>
+  <form action='/write' method='POST'>
+    <input type='text' name='t' placeholder='uartText'>
+    <input type='submit' class='btn' value='Verzenden'>
+  </form>
+</div>
+<div class='card'>
+  <h3>📟 Seriële Monitor</h3>
+  <div id='lb' class='box'>textBox</div>
+</div>
+</body></html>
